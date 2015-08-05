@@ -25,6 +25,9 @@ class DrunkViewController: UIViewController {
     var audioEngine:AVAudioEngine!
     var audioFile:AVAudioFile!
     
+    var buffer : AVAudioPCMBuffer!
+    var buffer2 : AVAudioPCMBuffer!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -76,18 +79,29 @@ class DrunkViewController: UIViewController {
         var audioPlayerNode = AVAudioPlayerNode()
         audioEngine.attachNode(audioPlayerNode)
         
+        buffer = AVAudioPCMBuffer(PCMFormat: audioPlayerNode.outputFormatForBus(0), frameCapacity: 100)
+        buffer.frameLength = 100
+        
+        audioEngine.mainMixerNode
+        var mainMixer : AVAudioMixerNode = audioEngine.mainMixerNode
+        
+        
+        
         var changePitchEffect = AVAudioUnitTimePitch()
         //changePitchEffect.rate = 1.4
         audioEngine.attachNode(changePitchEffect)
+        
+        
+        audioEngine.connect(changePitchEffect, to: mainMixer, format: buffer.format)
 
+        var mixerOutputFilePlayer = AVAudioPlayerNode()
+        audioEngine.attachNode(mixerOutputFilePlayer)
         
         
         
         
-        
-        
-        audioEngine.connect(audioPlayerNode, to: changePitchEffect, format: nil)
-        audioEngine.connect(changePitchEffect, to: audioEngine.outputNode, format: nil)
+        audioEngine.connect(audioPlayerNode, to: changePitchEffect, format: buffer.format)
+        audioEngine.connect(changePitchEffect, to: mainMixer, format: buffer.format)
         
         audioPlayerNode.scheduleFile(audioFile, atTime: nil, completionHandler: {self.finLoop = false})
         
@@ -100,7 +114,9 @@ class DrunkViewController: UIViewController {
         var mixerOutputFile : AVAudioFile = AVAudioFile(forWriting: <#NSURL!#>, settings: <#[NSObject : AnyObject]!#>, error: <#NSErrorPointer#>)
         */
         
-        //startRecording()
+        println(audioEngine.running)
+        
+        startRecording()
         
         
         var f : Float = 0.6
@@ -112,17 +128,18 @@ class DrunkViewController: UIViewController {
             while finLoop {
                 
                 f += (0.08*bajando)
+                f=slider.value
                 //audioPlayerNode.rate = f
                 
                 changePitchEffect.rate = f
-                if f <= 0.6
+                if f <= 0.45
                 {
                     bajando = 1
-                    println("subeidno")
+                    println("subiendo")
                     usleep(300000)
                 }
                 
-                if f >= 0.9
+                if f >= 0.7
                 {
                     bajando = -1
                     println("bjando")
@@ -137,11 +154,14 @@ class DrunkViewController: UIViewController {
                 sleep(2)
                 */
             }
-        sleep(3)
+        sleep(2)
         
-        //stopRecording()
+        
+        
+        stopRecording()
         
         audioPlayerNode.stop()
+        
         
         
         
@@ -161,13 +181,20 @@ class DrunkViewController: UIViewController {
         println(filePath)
         
         
-        
         var mainMixer : AVAudioMixerNode  = audioEngine.mainMixerNode
         
-        var formato: AVAudioFormat = mainMixer.outputFormatForBus(0 as AVAudioNodeBus)
-        var output : AVAudioFile = AVAudioFile(forWriting: filePath, settings: nil, error: nil)
+    
         
-        mainMixer.installTapOnBus(0, bufferSize: 4096, format: formato, block: nil)
+        var error: NSError?
+        var output : AVAudioFile = AVAudioFile(forWriting: filePath, settings: mainMixer.outputFormatForBus(0 as AVAudioNodeBus).settings, error: &error)
+        
+        mainMixer.installTapOnBus(0, bufferSize: 4096, format: mainMixer.outputFormatForBus(0 as AVAudioNodeBus)) { (buffer:AVAudioPCMBuffer!, time: AVAudioTime!) -> Void in
+                output.writeFromBuffer(buffer, error: &error)
+                if error != nil{
+                    println(error)
+                    return
+                }
+            }
         
     }
     

@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Record-->
@@ -40,6 +41,15 @@
                                     <action selector="stopSound:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Q4x-Jv-NL4"/>
                                 </connections>
                             </button>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kH8-RN-3hg">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <items>
+                                    <navigationItem title="Record" id="oAu-9c-vow"/>
+                                </items>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="0.0" y="28" width="400" height="44"/>
+                                </variation>
+                            </navigationBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -55,6 +65,7 @@
                                 <exclude reference="FCo-U1-Zph"/>
                                 <exclude reference="5sR-bW-NNU"/>
                                 <exclude reference="sOK-Gt-abp"/>
+                                <exclude reference="kH8-RN-3hg"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="rFp-yZ-wwk"/>
@@ -70,6 +81,7 @@
                                 <include reference="FCo-U1-Zph"/>
                                 <include reference="5sR-bW-NNU"/>
                                 <include reference="sOK-Gt-abp"/>
+                                <include reference="kH8-RN-3hg"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="rFp-yZ-wwk"/>
@@ -86,7 +98,7 @@
                         <outlet property="record" destination="FCo-U1-Zph" id="GHp-Kf-kbb"/>
                         <outlet property="recordLabel" destination="5sR-bW-NNU" id="pow-Jn-4QF"/>
                         <outlet property="stop" destination="sOK-Gt-abp" id="bsM-sK-PZj"/>
-                        <segue destination="Wus-lb-zcE" kind="show" identifier="stopRecording" id="bRf-VZ-cGs"/>
+                        <segue destination="Wus-lb-zcE" kind="show" identifier="stopRecording" id="HeF-2J-AMF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
@@ -116,9 +128,10 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u7S-Oh-RsX">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                <state key="normal" title="Play">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
+                                <state key="normal" title="Play"/>
+                                <variation key="widthClass=compact">
+                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                </variation>
                                 <connections>
                                     <action selector="playDrunk:" destination="Wus-lb-zcE" eventType="touchUpInside" id="lP3-ev-5iI"/>
                                 </connections>
@@ -132,11 +145,31 @@
                                     <action selector="sliderChange:" destination="Wus-lb-zcE" eventType="valueChanged" id="CWv-uk-Jbg"/>
                                 </connections>
                             </slider>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TOY-5y-hbO">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <items>
+                                    <navigationItem title="Play" id="nyS-CR-dN9">
+                                        <barButtonItem key="leftBarButtonItem" title="Item" systemItem="done" id="jrF-F7-IPN">
+                                            <connections>
+                                                <action selector="doneAction:" destination="Wus-lb-zcE" id="Ath-Rx-8Ej"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="mdO-zm-F0o">
+                                            <connections>
+                                                <action selector="shareAction:" destination="Wus-lb-zcE" id="AZb-RW-k3P"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="TOY-5y-hbO" firstAttribute="top" secondItem="dWQ-hI-US3" secondAttribute="bottom" id="7y2-0g-pfH"/>
                             <constraint firstAttribute="centerX" secondItem="u7S-Oh-RsX" secondAttribute="centerX" id="84Y-Oq-eHB"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="TOY-5y-hbO" secondAttribute="trailing" constant="-16" id="9Mt-N9-XCs"/>
                             <constraint firstAttribute="centerX" secondItem="RRs-z0-zZA" secondAttribute="centerX" constant="18" id="EgI-uI-mds"/>
+                            <constraint firstItem="TOY-5y-hbO" firstAttribute="leading" secondItem="CHD-bE-Zax" secondAttribute="leadingMargin" constant="-16" id="Swr-WS-2gD"/>
                             <constraint firstAttribute="centerY" secondItem="u7S-Oh-RsX" secondAttribute="centerY" id="adJ-Jo-suU"/>
                             <constraint firstItem="8jl-xr-Iv3" firstAttribute="top" secondItem="RRs-z0-zZA" secondAttribute="bottom" constant="38" id="har-4P-a2X"/>
                         </constraints>
@@ -145,12 +178,16 @@
                                 <exclude reference="RRs-z0-zZA"/>
                                 <exclude reference="u7S-Oh-RsX"/>
                                 <exclude reference="9sd-uZ-lLm"/>
+                                <exclude reference="TOY-5y-hbO"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="har-4P-a2X"/>
-                                <exclude reference="EgI-uI-mds"/>
+                                <exclude reference="7y2-0g-pfH"/>
+                                <exclude reference="9Mt-N9-XCs"/>
+                                <exclude reference="Swr-WS-2gD"/>
                                 <exclude reference="84Y-Oq-eHB"/>
                                 <exclude reference="adJ-Jo-suU"/>
+                                <exclude reference="EgI-uI-mds"/>
+                                <exclude reference="har-4P-a2X"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -158,12 +195,16 @@
                                 <include reference="RRs-z0-zZA"/>
                                 <include reference="u7S-Oh-RsX"/>
                                 <include reference="9sd-uZ-lLm"/>
+                                <include reference="TOY-5y-hbO"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="har-4P-a2X"/>
-                                <include reference="EgI-uI-mds"/>
+                                <include reference="7y2-0g-pfH"/>
+                                <include reference="9Mt-N9-XCs"/>
+                                <include reference="Swr-WS-2gD"/>
                                 <include reference="84Y-Oq-eHB"/>
                                 <include reference="adJ-Jo-suU"/>
+                                <include reference="EgI-uI-mds"/>
+                                <include reference="har-4P-a2X"/>
                             </mask>
                         </variation>
                     </view>
@@ -175,24 +216,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="chf-7K-mib" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2196" y="422"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="ErJ-yh-ETw">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Xm3-cf-5CW" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="5ac-2E-uwz">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="Kps-zM-enD"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="TCk-KG-Xfo" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="316.5" y="1065"/>
         </scene>
     </scenes>
 </document>

@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>6C3279E6-CB4F-48F8-B29A-E4954AB583CB</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>DrunkMe</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>141F53741552CA0655566F0F7080D59784BCC12B</key>
 		<string>https://github.com/gluix20/BoloMe.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>DrunkMe/DrunkMe.xcodeproj/project.xcworkspace</string>
+	<string>DrunkMe/DrunkMe.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>141F53741552CA0655566F0F7080D59784BCC12B</key>

@@ -14,6 +14,7 @@ class DrunkViewController: UIViewController {
     @IBOutlet weak var stopButton: UIButton!
     var receivedAudio : RecordedAudio!
     var finLoop : Bool = false
+    var output: AVAudioFile!
     
     @IBOutlet weak var slider: UISlider!
     
@@ -128,7 +129,7 @@ class DrunkViewController: UIViewController {
             while finLoop {
                 
                 f += (0.08*bajando)
-                f=slider.value
+                //f=slider.value
                 //audioPlayerNode.rate = f
                 
                 changePitchEffect.rate = f
@@ -186,10 +187,10 @@ class DrunkViewController: UIViewController {
     
         
         var error: NSError?
-        var output : AVAudioFile = AVAudioFile(forWriting: filePath, settings: mainMixer.outputFormatForBus(0 as AVAudioNodeBus).settings, error: &error)
+        output = AVAudioFile(forWriting: filePath, settings: mainMixer.outputFormatForBus(0 as AVAudioNodeBus).settings, error: &error)
         
         mainMixer.installTapOnBus(0, bufferSize: 4096, format: mainMixer.outputFormatForBus(0 as AVAudioNodeBus)) { (buffer:AVAudioPCMBuffer!, time: AVAudioTime!) -> Void in
-                output.writeFromBuffer(buffer, error: &error)
+                self.output.writeFromBuffer(buffer, error: &error)
                 if error != nil{
                     println(error)
                     return
@@ -202,6 +203,15 @@ class DrunkViewController: UIViewController {
         audioEngine.mainMixerNode.removeTapOnBus(0)
     }
     
+    @IBAction func doneAction(sender: UIBarButtonItem) {
+        self.dismissViewControllerAnimated(true, completion: {})
+        
+    }
+
+    @IBAction func shareAction(sender: UIBarButtonItem) {
+        let share = UIActivityViewController(activityItems: [output], applicationActivities: nil)
+        self.presentViewController(share, animated: true, completion: nil)
+    }
     /*
     // MARK: - Navigation
     

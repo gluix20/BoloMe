@@ -250,7 +250,7 @@ class DrunkViewController: UIViewController, UIActivityItemSource {
     func activityViewController(activityViewController: UIActivityViewController, subjectForActivityType activityType: String?) -> String {
     NSLog("Place holder subjectForActivity")
     if(activityType == UIActivityTypeMail){
-    return "Hey check this out!!"
+    return "Bolomizate!!!"
     } else if(activityType == UIActivityTypePostToTwitter){
     return news + " via @iOSgetstarted " + url
     } else {

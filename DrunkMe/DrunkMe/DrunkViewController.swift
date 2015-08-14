@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-class DrunkViewController: UIViewController {
+class DrunkViewController: UIViewController, UIActivityItemSource {
     
     @IBOutlet weak var stopButton: UIButton!
     var receivedAudio : RecordedAudio!
@@ -209,7 +209,7 @@ class DrunkViewController: UIViewController {
     }
 
     @IBAction func shareAction(sender: UIBarButtonItem) {
-        let share = UIActivityViewController(activityItems: [output], applicationActivities: nil)
+        let share = UIActivityViewController(activityItems: [self,output!], applicationActivities: nil)
         self.presentViewController(share, animated: true, completion: nil)
     }
     /*
@@ -227,5 +227,35 @@ class DrunkViewController: UIViewController {
     
     
     */
+    
+    var news: String = ""
+    var url : String = ""
+    
+    func activityViewControllerPlaceholderItem(activityViewController: UIActivityViewController) -> AnyObject {
+    NSLog("Place holder")
+    return news;
+    }
+    
+    func activityViewController(activityViewController: UIActivityViewController, itemForActivityType activityType: String) -> AnyObject? {
+    NSLog("Place holder itemForActivity")
+    if(activityType == UIActivityTypeMail){
+    return news
+    } else if(activityType == UIActivityTypePostToTwitter){
+    return news + " via @iOSgetstarted " + url
+    } else {
+    return news + " url"
+    }
+    }
+    
+    func activityViewController(activityViewController: UIActivityViewController, subjectForActivityType activityType: String?) -> String {
+    NSLog("Place holder subjectForActivity")
+    if(activityType == UIActivityTypeMail){
+    return "Hey check this out!!"
+    } else if(activityType == UIActivityTypePostToTwitter){
+    return news + " via @iOSgetstarted " + url
+    } else {
+    return news + " via @iOSgetstarted " + url
+    }
+    }
 
 }

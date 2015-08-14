@@ -29,6 +29,8 @@ class DrunkViewController: UIViewController, UIActivityItemSource {
     var buffer : AVAudioPCMBuffer!
     var buffer2 : AVAudioPCMBuffer!
     
+    var filepath2 : NSURL!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -41,6 +43,8 @@ class DrunkViewController: UIViewController, UIActivityItemSource {
         //        }
         
         println(receivedAudio.filePathUrl)
+        
+        filepath2 = receivedAudio.filePathUrl
         
         
         
@@ -163,14 +167,6 @@ class DrunkViewController: UIViewController, UIActivityItemSource {
         
         audioPlayerNode.stop()
         
-        
-        
-        
-        
-        
-
-        
-        
     }
     
     func startRecording() {
@@ -228,34 +224,40 @@ class DrunkViewController: UIViewController, UIActivityItemSource {
     
     */
     
-    var news: String = ""
+    var news: String = "news1"
     var url : String = ""
     
     func activityViewControllerPlaceholderItem(activityViewController: UIActivityViewController) -> AnyObject {
     NSLog("Place holder")
-    return news;
+        var dataWithBytes : NSData = NSData()
+        //dataWithBytes.length = 0
+        return dataWithBytes
     }
     
     func activityViewController(activityViewController: UIActivityViewController, itemForActivityType activityType: String) -> AnyObject? {
-    NSLog("Place holder itemForActivity")
-    if(activityType == UIActivityTypeMail){
-    return news
-    } else if(activityType == UIActivityTypePostToTwitter){
-    return news + " via @iOSgetstarted " + url
-    } else {
-    return news + " url"
-    }
+        
+        NSLog("Place holder itemForActivity")
+        if(activityType == UIActivityTypeMail){
+            return filepath2
+        } else if(activityType == UIActivityTypePostToTwitter){
+            return news + " via @iOSgetstarted " + url
+        } else {
+            return news + " url"
+        }
     }
     
     func activityViewController(activityViewController: UIActivityViewController, subjectForActivityType activityType: String?) -> String {
-    NSLog("Place holder subjectForActivity")
-    if(activityType == UIActivityTypeMail){
-    return "Bolomizate!!!"
-    } else if(activityType == UIActivityTypePostToTwitter){
-    return news + " via @iOSgetstarted " + url
-    } else {
-    return news + " via @iOSgetstarted " + url
-    }
+        NSLog("Place holder subjectForActivity")
+        
+        if(activityType == UIActivityTypeMail){
+            return "Bolomizate!!!"
+            
+        } else if(activityType == UIActivityTypePostToTwitter){
+            return news + " via @iOSgetstarted " + url
+        } else {
+            
+            return news + " via @iOSgetstarted " + url
+        }
     }
 
 }
